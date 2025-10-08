@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage</title>
+
+    <style>
+        body {
+            transition: background-color 0.5s;
+        }
+
+        .container {
+            padding: 3rem;
+            text-align: center;
+        }
+
+        body.dark {
+            background-color: rgb(31, 30, 30);
+            color: white;
+        }
+
+        body.light {
+            background-color: white;
+            color: black;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Toggle Themes</h3>
+        <button id="toggle-btn">Toggle</button>
+    </div>
+
+
+    <script>
+        const themes = {
+            dark: "dark",
+            light: "light"
+        }
+
+        function toggleTheme() {
+            const bodyElem = document.querySelector("body");
+
+            const currTheme = localStorage.getItem("theme");
+            const newTheme = currTheme === themes.dark ? themes.light : themes.dark;
+
+            bodyElem.classList.contains(currTheme) && bodyElem.classList.remove(currTheme);
+            bodyElem.classList.add(newTheme);
+            console.log(newTheme);
+            localStorage.setItem("theme", newTheme);
+        }
+
+        function initialMode() {
+            const bodyElem = document.querySelector("body");
+            const currTheme = localStorage.getItem("theme") ?? themes.light;
+            bodyElem.classList.add(currTheme);
+        }
+
+        document.querySelector("#toggle-btn").addEventListener("click", toggleTheme);
+        initialMode();
+    </script>
+</body>
+
+</html>

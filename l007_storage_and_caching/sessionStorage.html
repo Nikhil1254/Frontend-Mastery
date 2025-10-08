@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+
+    <style>
+        .notes_container {
+            text-align: center;
+        }
+
+        ol li {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="notes_container">
+        <input id="input-note" type="text" />
+        <button onclick="addNote()" id="add-btn">Add Data</button>
+    </div>
+    <ol id="notes-container"></ol>
+
+
+    <script>
+        function addNote() {
+            const inputElem = document.getElementById("input-note");
+            let input = inputElem.value;
+            if (input) {
+                // clear input 
+                inputElem.value = "";
+                
+                // get existing notes
+                const existingNotes = JSON.parse(sessionStorage.getItem("notes") || '[]');
+
+                // add new note to it
+                existingNotes.push(input);
+
+                // update session storage
+                sessionStorage.setItem("notes", JSON.stringify(existingNotes));
+
+                // render updated notes
+                renderNotes();
+            }
+        }
+
+        function renderNotes() {
+            // get notes
+            const existingNotes = JSON.parse(sessionStorage.getItem("notes") || "[]");
+            const list = document.getElementById("notes-container");
+            list.innerHTML = "";
+
+            existingNotes.forEach((note, idx) => {
+                const liElem = document.createElement('li');
+
+                liElem.innerHTML = `${note} <button onclick="removeNote(${idx})">Remove</button>`;
+                list.appendChild(liElem);
+            });
+        }
+
+        function removeNote(idx) {
+            // get existing notes
+            const existingNotes = JSON.parse(sessionStorage.getItem("notes") || '[]');
+
+            // remove the note
+            existingNotes.splice(idx, 1);
+
+            // update storage
+            sessionStorage.setItem("notes", JSON.stringify(existingNotes));
+
+            // render updated notes
+            renderNotes();
+        }
+
+        renderNotes();
+    </script>
+</body>
+
+</html>

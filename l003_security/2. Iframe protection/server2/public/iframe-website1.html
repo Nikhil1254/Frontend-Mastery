@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Hijacking example</title>
+</head>
+
+<body>
+    <h1>Welcome to click Hijacking example</h1>
+
+    <p>Clickjacking means we have layer of iframe on top of us and whatever click will happen will be on that iframe and
+        not our app</p>
+    <button onclick="alert('Your Application is hijacked !')" style="color: red; cursor: pointer;">Click Me!</button>
+
+    <script>
+        window.alert("Hi from iframe");
+
+        window.onload = function () {
+            try {
+                const parentWindow = window.parent;
+                const parentDocument = parentWindow.document;
+
+                const data = parentDocument.querySelector("body").innerHTML;
+                const cookie = parentDocument.cookie;
+
+                window.alert(`Data has been stolen !`);
+            } catch (err) {
+                console.log("Data theft failed:", err);
+            }
+        }
+    </script>
+</body>
+
+</html>

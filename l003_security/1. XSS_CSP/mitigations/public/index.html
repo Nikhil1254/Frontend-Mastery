@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Security Policy</title>
+    <script src="http://unsecure.com/abc.js"></script>
+</head>
+
+<body>
+    <!-- scripts and images whose nonce value will match only that will be executed -->
+    <script nonce="random123">
+        console.log(`trusted`);
+    </script>
+
+    <!-- it will not be executed as it doesn't have nonce value. If attacker injects script also, but as nonce will not match that script will not be executed -->
+    <script>
+        console.log(`Untrusted script`);
+    </script>
+    <h1>Welcome to CSP example</h1>
+
+    <!-- we have allowed to load images from https://media.licdn.com -->
+    <img src="https://media.licdn.com/dms/image/v2/D4D03AQGgvqykJDQWpw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1684646756951?e=1738800000&v=beta&t=QRM__awsdsnBTNslb7BUawtPUtxxP7rAhRHvEWVA8DQ" />
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #messages {
+            list-style: none;
+            padding: 0;
+        }
+
+        #messages li {
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #message-input {
+            width: 93%;
+        }
+
+        #input-container {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            padding: 1rem;
+            height: 40px;
+        }
+
+        .user-details {
+            padding: 1rem;
+        }
+
+        .user-details input {
+            width: 300px;
+        }
+
+        .messages-container {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="user-details">
+        <h1>Chat Room - E 1602</h1>
+        <div>
+            <input id="user-name" type="text" placeholder="Please enter your name to continue">
+            <button id="usename-btn">Submit</button>
+        </div>
+    </div>
+    <div class="messages-container">
+        <ul id="messages"></ul>
+        <div id="input-container">
+            <input id="message-input" type="text" placeholder="Type a message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <!-- getting soket.io using cdn link -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = window.io();
+        let userName = null;
+
+        // handle userName logic
+        const userNameBtn = document.getElementById("usename-btn");
+        const userNameInput = document.getElementById("user-name");
+
+        function submitName() {
+            const name = userNameInput.value;
+            console.log(name);
+            if (name.trim() !== "") {
+                userName = name.toUpperCase();
+                document.querySelector(".user-details div").style.visibility = "hidden";
+                document.querySelector(".messages-container").style.visibility = "visible";
+            }
+        }
+
+        userNameInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                submitName();
+            }
+        })
+
+        userNameBtn.addEventListener("click", (e) => {
+            submitName();
+        })
+
+
+
+        // handle websockets
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const messagesList = document.getElementById('messages');
+
+        function sendMessage() {
+            const message = messageInput.value;
+            if (message.trim !== "") {
+                socket.emit('message', { name: userName, message });
+                messageInput.value = '';
+            }
+        }
+
+        sendButton.addEventListener('click', () => {
+            sendMessage();
+        });
+
+        messageInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        })
+
+        socket.on('message', (msg) => {
+            const ele = `<li><i><strong>${msg.name}</strong></i>: ${msg.message}</li>`
+            messagesList.insertAdjacentHTML("beforeend", ele);
+        });
+    </script>
+</body>
+
+</html>

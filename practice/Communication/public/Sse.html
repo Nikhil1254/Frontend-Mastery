@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Welcome to sse(Server Sent Event) example</h1>
+    <p id="sse"></p>
+
+    <script>
+        const elem = document.getElementById("sse");
+
+        if (typeof EventSource !== undefined) {
+            const eventSource = new EventSource("/events");
+
+            eventSource.onmessage = function (event) {
+                elem.innerText = `Current Time: ${event.data}`;
+            }
+
+            eventSource.onopen = function () {
+                console.log(`Connection Opened.`);
+            }
+
+            eventSource.onerror = function (error) {
+                console.error(`Error with SSE: ${error}`);
+                elem.innerText = `Connection lost. Trying to reconnect!`;
+            }
+        } else {
+            elem.innerText = "Your browser doesn't support SSE!";
+        }
+    </script>
+</body>
+
+</html>

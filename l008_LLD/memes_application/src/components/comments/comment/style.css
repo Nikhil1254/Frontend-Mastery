@@ -1,0 +1,20 @@
+.comment-container{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(128, 128, 128, 0.307);
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(128, 128, 128, 0.835);
+    margin: 3px 0px;
+
+    .comment-username{
+        font-style: italic;
+        font-weight: 400;
+        font-size: medium;
+    }
+
+    .comment-body{
+        font-size: medium;
+    }   
+}
+

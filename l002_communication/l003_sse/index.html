@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Example</title>
+</head>
+
+<body>
+    <h1>Server Sent Event example</h1>
+    <div id="data-container"></div>
+    <script>
+        // provide the route/endpoint on which we have server sent event
+        const eventSource = new EventSource("/sse");
+
+        eventSource.onmessage = (event) => {
+            const dataContRef = document.getElementById("data-container");
+            const ele = document.createElement("p");
+            ele.innerText = event.data;
+            dataContRef.appendChild(ele);
+        }
+
+    </script>
+</body>
+
+</html>

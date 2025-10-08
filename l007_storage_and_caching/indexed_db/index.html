@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+</head>
+
+<body>
+    <div id="input-container">
+        <input type="text">
+        <button id="add-todo">Add</button>
+    </div>
+
+    <div id="list-container">
+        <ol id="todos"></ol>
+    </div>
+
+    <script>
+        // open db
+        const db = new Dexie("todos_db");
+
+        // define schema
+        db.version(1).stores({
+            "todos": "++id, task"
+        });
+
+        // UI logic
+        const inputElem = document.querySelector("#input-container input");
+        const addbtn = document.getElementById("add-todo");
+        const list = document.getElementById("todos");
+
+        addbtn.addEventListener("click", () => {
+            const task = inputElem.value.trim();
+            inputElem.value = "";
+            if (task) {
+                db.todos.add({ task });
+                displayTodos();
+            }
+        })
+
+        function displayTodos() {
+            list.innerHTML = "";
+
+            db.todos.toArray().then(todos => {
+                console.log(`todos :`, todos);
+                todos.forEach(todo => {
+                    const liElem = document.createElement("li");
+                    liElem.innerHTML = `${todo.task} <button onclick="removeTodo(${todo.id})">Remove</button>`
+                    list.appendChild(liElem);
+                })
+            })
+        }
+
+        function removeTodo(id) {
+            db.todos.delete(id);
+            displayTodos();
+        }
+
+        displayTodos();
+    </script>
+</body>
+
+</html>

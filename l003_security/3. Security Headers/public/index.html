@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Headers</title>
+</head>
+
+<body>
+    <h3>In this example we will learn about security headers.</h3>
+    <div id="root"></div>
+
+
+    <script>
+        console.log(encodeURIComponent(`<img src="not-found" onerror="alert('Website has been hijacked !')">`));
+
+        const divElem = document.getElementById("root");
+        const params = new URLSearchParams(window.location.search);
+
+
+        divElem.innerHTML = params.get("name");
+    </script>
+</body>
+
+</html>

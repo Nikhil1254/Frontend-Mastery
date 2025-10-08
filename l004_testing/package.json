@@ -1,0 +1,17 @@
+{
+  "name": "4.-testing",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest --watch --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "puppeteer": "^24.2.0"
+  }
+}

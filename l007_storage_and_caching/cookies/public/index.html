@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Cookies Example</h1>
+
+    <script>
+        // https cookies will be their but we can't see it here.
+        // we can see those cookies in application tab
+        const cookies = document.cookie;
+
+        console.log("cookies -")
+        cookies.split(";").forEach(cookie => {
+            const [name, value] = cookie.split("=");
+            console.log(`${name} : ${value}`);
+        })
+    </script>
+</body>
+
+</html>

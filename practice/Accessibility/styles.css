@@ -1,0 +1,39 @@
+.form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+    border: 2px solid grey;
+    padding: 1rem;
+    border-radius: 3px;
+}
+
+.btnContainer{
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.formHeading{
+    text-align: center;
+}
+
+.nameContainer, .ageContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+#name, #age{
+    padding: 0.5rem;
+    font-size: large;
+}
+
+.btnContainer button, .gender{
+    cursor: pointer;
+}
+
+button{
+    padding: 0.5rem;
+    font-size: medium;
+}

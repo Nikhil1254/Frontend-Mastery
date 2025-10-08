@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="short-polling-container">
+        <h1>This is Short Polling example</h1>
+        <p>Person Details : <span id="person-details">-</span></p>
+    </div>
+
+    <script>
+        const detailsElem = document.getElementById("person-details");
+
+        const id = setInterval(() => {
+            fetch("http://localhost:3001/api/shortPolling").then((res) => res.json()).then((data) => {
+                detailsElem.innerText = `Hello ${data.name}, you are ${data.age} years old.`;
+            }).catch((err) => {
+                console.error(err);
+                clearInterval(id);
+            })
+        }, 3000)
+    </script>
+</body>
+
+</html>

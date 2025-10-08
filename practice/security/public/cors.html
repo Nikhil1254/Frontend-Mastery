@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>CORS policy</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <br>
+    <button id="stopButton">Stop Camera</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        fetch("http://localhost:3000/api/person").then(res => res.json()).then(console.log).catch(console.error);
+
+        const video = document.getElementById('video');
+        const stopButton = document.getElementById('stopButton');
+        let stream; // To store the media stream
+
+        // Request access to the camera
+        async function startCamera() {
+            try {
+                // Request camera access (video only)
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+                // Set the video source to the camera stream
+                video.srcObject = stream;
+            } catch (error) {
+                console.error('Error accessing the camera:', error);
+            }
+        }
+
+        // Stop the camera when the button is clicked
+        stopButton.addEventListener('click', () => {
+            if (stream) {
+                const tracks = stream.getTracks();
+                tracks.forEach(track => track.stop()); // Stop all media tracks
+                video.srcObject = null; // Clear the video source
+            }
+        });
+
+        // Start the camera automatically when the page loads
+        startCamera();
+    </script>
+</body>
+
+</html>

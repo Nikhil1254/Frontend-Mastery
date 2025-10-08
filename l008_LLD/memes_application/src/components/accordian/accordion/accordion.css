@@ -1,0 +1,29 @@
+.accordion-container {
+    border: 1px solid grey;
+
+
+    .accordion-header{
+        padding: 1rem;
+        background-color: rgba(0, 0, 0, 0.463);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        
+
+        .title{
+            color: white;
+            font-weight: 300;
+            font-style: italic;
+        }
+    }
+
+    .accordion-body{
+        padding: 1rem;
+    }
+
+    .hide{
+        display: none;
+    }
+}

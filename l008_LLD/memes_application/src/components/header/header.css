@@ -1,0 +1,40 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    padding: 1rem;
+
+    .app-name{
+        font-size: larger;
+        font-weight: 500;
+        font-style: oblique;
+    }
+
+    .header-actions{
+        display: flex;
+        gap: 1rem;
+
+        .nav-items{
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            
+            a{
+                color: white;
+                text-decoration: none;
+                padding: 5px 10px;
+                transition: 0.5s all;
+                
+            }
+
+            a:not(:last-child){
+                border-right: 1px dashed white;
+            }
+
+            a:hover{
+                color: lightblue;
+            }
+        }
+    }
+}
